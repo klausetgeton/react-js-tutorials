@@ -9,6 +9,7 @@ import { fetchTweets } from "../actions/tweetsActions"
     user: store.user.user,
     userFetched: store.user.fetched,
     tweets: store.tweets.tweets,
+    fetching: store.tweets.fetching,
   };
 })
 export default class Layout extends React.Component {
@@ -21,7 +22,14 @@ export default class Layout extends React.Component {
   }
 
   render() {
-    const { user, tweets } = this.props;
+    const { user, tweets, fetching } = this.props;
+
+    // Display loading on a asynchronous action
+    if(fetching) {
+        return <div>
+            Fetching tweets...
+        </div>
+    }
 
     if (!tweets.length) {
       return <button onClick={this.fetchTweets.bind(this)}>load tweets</button>
